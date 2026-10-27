@@ -20,8 +20,37 @@ int current_game_total(Bowling_Frame * first_frame)
 	return game_total;	
 }
 
-int main()
+int main(int argc, char * argv[] )
 {
+	typedef  Bowling_Frame* Bowling_Frame_Pointer;
+	if(argc<1){
+		cout<<"Not Enough Arguments"<<endl;
+		return 0;
+	}
+	else if(argc>1){
+		cout<<"Too Many Arguments"<<endl;
+		return 0;
+	}
+	int playerCount=stoi(argv[0]);
+	Bowling_Frame_Pointer array[playerCount];
+	// Bowling_Frame** ray = new Bowling_Frame*;
+	for(int i=0;i<playerCount;i++){
+		array[i]=new Bowling_Frame(0);
+	} //created first frame
+
+	Bowling_Frame_Pointer current;
+	for(int i=0; i<playerCount;i++){
+		current = array[i];
+		for(int y=1;y<10;y++){
+			current->next_frame(new Bowling_Frame(y));
+			current->next_frame()->prev_frame(current);
+			current->next_frame();
+		}
+		array[i]->update_scores();//update the scores of the now completed frame
+	}
+
+
+
 	//make frames
 	Bowling_Frame * f1 = new Bowling_Frame(1);
 	Bowling_Frame * f2 = new Bowling_Frame(2);

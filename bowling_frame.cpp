@@ -74,6 +74,16 @@ void Bowling_Frame::update_scores()
 	else if (next_frame_) 	next_frame_->update_scores();
 
 	frame_score_ = score1_ + score2_;
+	if(strike_){
+		if(next_frame_->strike_)
+			frame_score_+=next_frame_->score1()+next_frame_->next_frame_->score1();
+		else{
+			frame_score_+=next_frame_->score1()+next_frame_->score2();
+		}
+	}
+	else if(spare_){
+		frame_score_+=next_frame_->score1();
+	}
 }
 
 
